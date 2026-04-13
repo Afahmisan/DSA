@@ -2,7 +2,7 @@ class Solution {
 public:
     int calPoints(vector<string>& operations) {
         stack <int> a;
-        int n = operations.size();
+        int n = operations.size(), sum = 0;
         for(int i = 0; i < n; i++){
             if(operations[i] == "+"){
                 stack <int> temp(a);
@@ -12,24 +12,22 @@ public:
                     temp.pop();
                     counter++;
                 }
+                sum+= total;
                 a.push(total);
             } else if (operations[i] == "D"){
-                int temp = a.top();
-                a.push(temp*2);
+                int temp = 2 * a.top();
+                sum+= temp;
+                a.push(temp);
             } else if ( operations[i] == "C"){
+                sum -= a.top();
                 a.pop();
             } else {
-                a.push(stoi(operations[i]));
+                int temp = stoi(operations[i]);
+                sum += temp;
+                a.push(temp);
             }
         }
 
-        int total = 0;
-        while(!a.empty()){
-            cout << a.top() << endl;
-            total += a.top();
-            a.pop();
-        }
-
-        return total;
+        return sum;
     }
 };
