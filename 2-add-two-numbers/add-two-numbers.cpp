@@ -19,33 +19,21 @@ public:
         int hold = 0;
         ListNode* current = newNode;
         while(l1 != nullptr || l2 != nullptr){
-            int valueTemp = 0;
-            if(l1 == nullptr){
-                valueTemp = l2->val + hold;
-                current ->next = new ListNode(valueTemp % 10);
-                current = current->next;
-                l2 = l2 -> next;
-                hold = valueTemp / 10;
-            } else if (l2 == nullptr){
-                valueTemp = l1->val + hold;
-                current ->next = new ListNode(valueTemp % 10);
-                current = current->next;
-                l1 = l1 -> next;
-                hold = valueTemp / 10;
-            } else {
-                valueTemp = l1-> val + l2-> val + hold;
-                current ->next = new ListNode(valueTemp % 10);
-                current = current->next;
-                l1 = l1 -> next;
-                l2 = l2 -> next;
-                hold = valueTemp / 10;
-            }
-            if(hold != 0){
-                current ->next = new ListNode(hold);
-            }
+            int val1 = (l1 != nullptr) ? l1->val : 0;
+            int val2 = (l2 != nullptr) ? l2->val : 0;
+
+            int temp = val1 + val2 + hold;
+            hold = temp /10;
+            current -> next = new ListNode(temp % 10);
+            current = current ->next;
             
+            if (l1 != nullptr) l1 = l1->next;
+            if (l2 != nullptr) l2 = l2->next;
         }
 
+        if(hold!= 0){
+            current -> next = new ListNode(hold);
+        }
         return newNode -> next;
     }
 };
